@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:module_12_assignment/widget/calculator_buttons.dart';
 
 class Calculator extends StatefulWidget {
@@ -139,149 +140,290 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Calculator"),
-        actions: [
-          Text(
-            widget.isDarkMode ? 'Dark Mode ' : 'Light Mode ',
-            style: TextStyle(
-              color: widget.isDarkMode ? Colors.orangeAccent : Colors.white,
-              fontSize: 16,
-            ),
-          ),
-          IconButton(
-            onPressed: widget.onToggleTheme,
-            icon: Icon(
-              widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-              color: widget.isDarkMode ? Colors.orangeAccent : Colors.black87,
-              size: 28,
-            ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              alignment: Alignment.bottomRight,
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: widget.isDarkMode
-                          ? Colors.white10
-                          : Colors.black12,
-                    ),
-                    child: Text(
-                      display + input,
-                      style: TextStyle(
-                        color: widget.isDarkMode
-                            ? Colors.white70
-                            : Colors.black,
-                        fontSize: 24,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                    alignment: Alignment.bottomRight,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: widget.isDarkMode
-                          ? Colors.white12
-                          : Colors.black26,
-                    ),
-                    child: Text(
-                      "$output",
-                      style: TextStyle(
-                        color: widget.isDarkMode
-                            ? Colors.white70
-                            : Colors.black,
-                        fontSize: 50,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+    final orientation = MediaQuery.of(context).orientation;
+    final bool isPortrait = orientation == Orientation.portrait;
 
-          // Calculator buttons
-          Row(
-            children: [
-              CalcButton(
-                onclick: () => buttonPress('AC'),
-                text: 'AC',
-                flex: 2,
-                isOperator: true,
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(isPortrait ? 48.h : 50.h),
+        child: AppBar(
+          title: Text("Calculator"),
+          actions: [
+            Text(
+              widget.isDarkMode ? 'Dark Mode ' : 'Light Mode ',
+              style: TextStyle(
+                color: widget.isDarkMode ? Colors.orangeAccent : Colors.white,
+                fontSize: 16,
               ),
-              CalcButton(
-                onclick: backspace,
-                icon: Icons.backspace_outlined,
-                isOperator: true,
+            ),
+            IconButton(
+              onPressed: widget.onToggleTheme,
+              icon: Icon(
+                widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                color: widget.isDarkMode ? Colors.orangeAccent : Colors.black87,
+                size: 28,
               ),
-              CalcButton(
-                onclick: () => buttonPress('÷'),
-                text: '÷',
-                isOperator: true,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              CalcButton(onclick: () => buttonPress('7'), text: '7'),
-              CalcButton(onclick: () => buttonPress('8'), text: '8'),
-              CalcButton(onclick: () => buttonPress('9'), text: '9'),
-              CalcButton(
-                onclick: () => buttonPress('×'),
-                text: '×',
-                isOperator: true,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              CalcButton(onclick: () => buttonPress('4'), text: '4'),
-              CalcButton(onclick: () => buttonPress('5'), text: '5'),
-              CalcButton(onclick: () => buttonPress('6'), text: '6'),
-              CalcButton(
-                onclick: () => buttonPress('-'),
-                text: '-',
-                isOperator: true,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              CalcButton(onclick: () => buttonPress('1'), text: '1'),
-              CalcButton(onclick: () => buttonPress('2'), text: '2'),
-              CalcButton(onclick: () => buttonPress('3'), text: '3'),
-              CalcButton(
-                onclick: () => buttonPress('+'),
-                text: '+',
-                isOperator: true,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              CalcButton(onclick: () => buttonPress('0'), text: '0'),
-              CalcButton(onclick: () => buttonPress('00'), text: '00'),
-              CalcButton(onclick: () => buttonPress('.'), text: '.'),
-              CalcButton(
-                onclick: () => buttonPress('='),
-                text: '=',
-                isOperator: true,
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      body: Center(
+        child: isPortrait? Column(
+          children: [
+            Expanded(
+              child: Container(
+                alignment: Alignment.bottomRight,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: widget.isDarkMode
+                            ? Colors.white10
+                            : Colors.black12,
+                      ),
+                      child: Text(
+                        display + input,
+                        style: TextStyle(
+                          color: widget.isDarkMode
+                              ? Colors.white70
+                              : Colors.black,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                      alignment: Alignment.bottomRight,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: widget.isDarkMode
+                            ? Colors.white12
+                            : Colors.black26,
+                      ),
+                      child: Text(
+                        "$output",
+                        style: TextStyle(
+                          color: widget.isDarkMode
+                              ? Colors.white70
+                              : Colors.black,
+                          fontSize: 50,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Calculator buttons
+            Row(
+              children: [
+                CalcButton(
+                  onclick: () => buttonPress('AC'),
+                  text: 'AC',
+                  flex: 2,
+                  isOperator: true,
+                ),
+                CalcButton(
+                  onclick: backspace,
+                  icon: Icons.backspace_outlined,
+                  isOperator: true,
+                ),
+                CalcButton(
+                  onclick: () => buttonPress('÷'),
+                  text: '÷',
+                  isOperator: true,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                CalcButton(onclick: () => buttonPress('7'), text: '7'),
+                CalcButton(onclick: () => buttonPress('8'), text: '8'),
+                CalcButton(onclick: () => buttonPress('9'), text: '9'),
+                CalcButton(
+                  onclick: () => buttonPress('×'),
+                  text: '×',
+                  isOperator: true,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                CalcButton(onclick: () => buttonPress('4'), text: '4'),
+                CalcButton(onclick: () => buttonPress('5'), text: '5'),
+                CalcButton(onclick: () => buttonPress('6'), text: '6'),
+                CalcButton(
+                  onclick: () => buttonPress('-'),
+                  text: '-',
+                  isOperator: true,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                CalcButton(onclick: () => buttonPress('1'), text: '1'),
+                CalcButton(onclick: () => buttonPress('2'), text: '2'),
+                CalcButton(onclick: () => buttonPress('3'), text: '3'),
+                CalcButton(
+                  onclick: () => buttonPress('+'),
+                  text: '+',
+                  isOperator: true,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                CalcButton(onclick: () => buttonPress('0'), text: '0'),
+                CalcButton(onclick: () => buttonPress('00'), text: '00'),
+                CalcButton(onclick: () => buttonPress('.'), text: '.'),
+                CalcButton(
+                  onclick: () => buttonPress('='),
+                  text: '=',
+                  isOperator: true,
+                ),
+              ],
+            ),
+          ],
+        ) : Row(
+          children: [
+            Expanded(
+              child: Container(
+                alignment: Alignment.bottomRight,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5, 10, 16, 10),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: widget.isDarkMode
+                            ? Colors.white10
+                            : Colors.black12,
+                      ),
+                      child: Text(
+                        display + input,
+                        style: TextStyle(
+                          color: widget.isDarkMode
+                              ? Colors.white70
+                              : Colors.black,
+                          fontSize: 12.sp,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(5, 10, 16, 10),
+                        alignment: Alignment.topRight,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: widget.isDarkMode
+                              ? Colors.white12
+                              : Colors.black26,
+                        ),
+                        child: Text(
+                          "$output",
+                          style: TextStyle(
+                            color: widget.isDarkMode
+                                ? Colors.white70
+                                : Colors.black,
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Calculator buttons
+                      Row(
+                        children: [
+                          CalcButton(
+                            onclick: () => buttonPress('AC'),
+                            text: 'AC',
+                            flex: 2,
+                            isOperator: true,
+                          ),
+                          CalcButton(
+                            onclick: backspace,
+                            icon: Icons.backspace_outlined,
+                            isOperator: true,
+                          ),
+                          CalcButton(
+                            onclick: () => buttonPress('÷'),
+                            text: '÷',
+                            isOperator: true,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          CalcButton(onclick: () => buttonPress('7'), text: '7'),
+                          CalcButton(onclick: () => buttonPress('8'), text: '8'),
+                          CalcButton(onclick: () => buttonPress('9'), text: '9'),
+                          CalcButton(
+                            onclick: () => buttonPress('×'),
+                            text: '×',
+                            isOperator: true,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          CalcButton(onclick: () => buttonPress('4'), text: '4'),
+                          CalcButton(onclick: () => buttonPress('5'), text: '5'),
+                          CalcButton(onclick: () => buttonPress('6'), text: '6'),
+                          CalcButton(
+                            onclick: () => buttonPress('-'),
+                            text: '-',
+                            isOperator: true,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          CalcButton(onclick: () => buttonPress('1'), text: '1'),
+                          CalcButton(onclick: () => buttonPress('2'), text: '2'),
+                          CalcButton(onclick: () => buttonPress('3'), text: '3'),
+                          CalcButton(
+                            onclick: () => buttonPress('+'),
+                            text: '+',
+                            isOperator: true,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          CalcButton(onclick: () => buttonPress('0'), text: '0'),
+                          CalcButton(onclick: () => buttonPress('00'), text: '00'),
+                          CalcButton(onclick: () => buttonPress('.'), text: '.'),
+                          CalcButton(
+                            onclick: () => buttonPress('='),
+                            text: '=',
+                            isOperator: true,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      bottomNavigationBar: isPortrait? BottomAppBar(
         color: widget.isDarkMode ? Colors.black54 : Colors.indigo,
         height: 42,
         child: Text(
@@ -289,7 +431,7 @@ class _CalculatorState extends State<Calculator> {
           style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
-      ),
+      ): null,
     );
   }
 }

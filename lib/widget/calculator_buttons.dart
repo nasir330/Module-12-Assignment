@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CalcButton extends StatelessWidget {
   final String? text;
@@ -20,8 +21,10 @@ class CalcButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final orientation = MediaQuery.of(context).orientation;
+    final bool isPortrait = orientation == Orientation.portrait;
 
+    final theme = Theme.of(context);
     final backgroundColor = color ??
         (isOperator
             ? theme.colorScheme.secondary.withOpacity(0.8)
@@ -31,21 +34,41 @@ class CalcButton extends StatelessWidget {
     return Expanded(
       flex: flex,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
+        padding: const EdgeInsets.all(3.0),
+        child: isPortrait? ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: backgroundColor,
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           onPressed: onclick,
           child: icon != null
-              ? Icon(icon, color: Colors.white, size: 36)
+              ? Icon(icon, color: Colors.white, size: 20.sp)
               : Text(
             text ?? '',
-            style: const TextStyle(fontSize: 25, color: Colors.white),
+            style: TextStyle(fontSize: 18.sp, color: Colors.white),
+          ),
+        ) :
+        SizedBox(
+          width:0.1.sw,
+          height: 0.13.sh,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              padding: const EdgeInsets.all(5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: onclick,
+            child: icon != null
+                ? Icon(icon, color: Colors.white, size: 0.03.sw)
+                : Text(
+              text ?? '',
+              style: TextStyle(fontSize: 0.03.sw, color: Colors.white),
+            ),
           ),
         ),
       ),
